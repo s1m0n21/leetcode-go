@@ -11,6 +11,20 @@ package _palindrome_number
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	x := -121
-	t.Logf("answer = %v", isPalindrome(x))
+	tests := []struct{
+		input int
+		expect bool
+	}{
+		{-121, false},
+		{121, true},
+		{0, true},
+		{10, false},
+		{101, true},
+	}
+
+	for _, test := range tests {
+		if actual := isPalindrome(test.input); actual != test.expect {
+			t.Errorf("input = %d, expect = %t, actual = %t", test.input, test.expect, actual)
+		}
+	}
 }

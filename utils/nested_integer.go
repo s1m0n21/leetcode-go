@@ -1,6 +1,6 @@
 /**
  * @Author         : s1m0n21
- * @Description    :
+ * @Description    : Nested integer util
  * @Project        : leetcode-go
  * @File           : nested_integer.go
  * @Date           : 2021/7/23 3:43 下午

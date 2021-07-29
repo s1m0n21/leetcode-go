@@ -1,6 +1,6 @@
 /**
  * @Author         : s1m0n21
- * @Description    :
+ * @Description    : Tree util
  * @Project        : leetcode-go
  * @File           : tree.go
  * @Date           : 2021/7/23 11:01 上午

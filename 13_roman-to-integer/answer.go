@@ -23,9 +23,9 @@ func romanToInt(s string) int {
 	for i := 0; i < len(s); i++ {
 		if i < len(s) - 1 && romanInt[s[i]] < romanInt[s[i+1]] {
 			out -= romanInt[s[i]]
-			continue
+		} else {
+			out += romanInt[s[i]]
 		}
-		out += romanInt[s[i]]
 	}
 	return out
 }

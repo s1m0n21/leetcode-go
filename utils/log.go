@@ -1,6 +1,6 @@
 /**
  * @Author         : s1m0n21
- * @Description    :
+ * @Description    : Log util
  * @Project        : leetcode-go
  * @File           : log.go
  * @Date           : 2021/6/6 11:19 上午

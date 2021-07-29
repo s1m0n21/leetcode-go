@@ -11,6 +11,20 @@ package _longest_substring_without_repeating_characters
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	s := "bcdeeefghjjck"
-	t.Logf("answer = %d", lengthOfLongestSubstring(s))
+	tests := []struct {
+		input  string
+		expect int
+	}{
+		{"hello", 3},
+		{"abcabcbb", 3},
+		{"bbbbbb", 1},
+		{"pwwkew", 3},
+		{"", 0},
+	}
+
+	for _, test := range tests {
+		if actual := lengthOfLongestSubstring(test.input); actual != test.expect {
+			t.Errorf("input = %s, expect = %d, actual = %d", test.input, test.expect, actual)
+		}
+	}
 }

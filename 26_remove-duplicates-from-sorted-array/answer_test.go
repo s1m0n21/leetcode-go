@@ -8,10 +8,25 @@
 
 package _remove_duplicates_from_sorted_array
 
-import "testing"
+import (
+	"github.com/s1m0n21/leetcode-go/utils"
+	"testing"
+)
 
 func TestAnswer(t *testing.T) {
-	nums := []int{}
+	tests := []struct {
+		input  []int
+		expect int
+	}{
+		{[]int{1,1,2}, 2},
+		{[]int{0,0,1,1,1,2,2,3,3,4}, 5},
+	}
 
-	t.Logf("answer = %d, nums = %+v", removeDuplicates(nums), nums)
+	for _, test := range tests {
+		c := utils.CopySlice(test.input)
+		if actual := removeDuplicates(c);
+			actual != test.expect || utils.HasDuplicate(c[:actual]) {
+			t.Errorf("input = %+v, expect = %+v, actual = %d", test.input, test.expect, actual)
+		}
+	}
 }

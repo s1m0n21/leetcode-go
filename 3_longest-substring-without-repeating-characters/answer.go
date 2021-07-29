@@ -8,30 +8,6 @@
 
 package _longest_substring_without_repeating_characters
 
-//func lengthOfLongestSubstring(s string) int {
-//	if s == "" {
-//		return 0
-//	}
-//
-//	freq := map[byte]int{}
-//	left, right := 0, -1
-//	out := 0
-//
-//	for left < len(s) {
-//		if right+1 < len(s) && freq[s[right+1]] == 0 {
-//			right++
-//			freq[s[right]]++
-//		} else {
-//			freq[s[left]]--
-//			left++
-//		}
-//
-//		out = max(out, right-left+1)
-//	}
-//
-//	return out
-//}
-
 func lengthOfLongestSubstring(s string) int {
 	if s == "" {
 		return 0

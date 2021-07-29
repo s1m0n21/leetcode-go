@@ -11,6 +11,18 @@ package _reverse_integer
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	x := 1234567890
-	t.Logf("x = %d, answer = %d", x, reverse(x))
+	tests := []struct {
+		input  int
+		expect int
+	}{
+		{123, 321},
+		{-123, -321},
+		{0, 0},
+	}
+
+	for _, test := range tests {
+		if actual := reverse(test.input); actual != test.expect {
+			t.Errorf("input = %d, expect = %d, actual = %d", test.input, test.expect, actual)
+		}
+	}
 }

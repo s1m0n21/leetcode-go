@@ -11,6 +11,20 @@ package _valid_palindrome
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	s := "race a car"
-	t.Logf("answer = %v", isPalindrome(s))
+	tests := []struct{
+		input string
+		expect bool
+	}{
+		{"race a car", false},
+		{"www", true},
+		{"t", true},
+		{"taaaa", false},
+		{"A man, a plan, a canal: Panama", true},
+	}
+
+	for _, test := range tests {
+		if actual := isPalindrome(test.input); actual != test.expect {
+			t.Errorf("input = %s, expect = %t, actual = %t", test.input, test.expect, actual)
+		}
+	}
 }

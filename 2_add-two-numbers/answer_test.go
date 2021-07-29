@@ -14,12 +14,23 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	l1 := utils.MakeListNode(2, 4, 3)
-	l2 := utils.MakeListNode(5, 6, 4)
+	type input struct {
+		l1, l2 *utils.ListNode
+	}
 
-	res := addTwoNumbers(l1, l2)
-	for res != nil {
-		t.Logf("answer = %d", res.Val)
-		res = res.Next
+	tests := []struct {
+		input  input
+		expect *utils.ListNode
+	}{
+		{input{utils.MakeListNode(2, 4, 3), utils.MakeListNode(5, 6, 4)}, utils.MakeListNode(7, 0, 8)},
+		{input{utils.MakeListNode(3, 2, 1), utils.MakeListNode(4, 5, 6)}, utils.MakeListNode(7, 7, 7)},
+		{input{utils.MakeListNode(9, 9, 9), utils.MakeListNode(2)}, utils.MakeListNode(1, 0, 0, 1)},
+		{input{utils.MakeListNode(), utils.MakeListNode()}, utils.MakeListNode()},
+	}
+
+	for _, test := range tests {
+		if actual := addTwoNumbers(test.input.l1, test.input.l2); !utils.CompareList(actual, test.expect) {
+			t.Errorf("input = %+v, expect = %s, actual = %s", test.input, test.expect, actual)
+		}
 	}
 }

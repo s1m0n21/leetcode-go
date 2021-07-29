@@ -8,11 +8,30 @@
 
 package _two_sum
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestAnswer(t *testing.T) {
-	nums := []int{3,2,4}
-	target := 6
+	type input struct {
+		nums   []int
+		target int
+	}
 
-	t.Logf("answer = %v", twoSum(nums, target))
+	tests := []struct {
+		input  input
+		expect []int
+	}{
+		{input{[]int{3, 2, 4}, 6}, []int{1, 2}},
+		{input{[]int{2, 7, 11, 17}, 9}, []int{0, 1}},
+		{input{[]int{3, 4, 2}, 5}, []int{0, 2}},
+		{input{[]int{}, 1}, nil},
+	}
+
+	for _, test := range tests {
+		if actual := twoSum(test.input.nums, test.input.target); !reflect.DeepEqual(actual, test.expect) {
+			t.Errorf("input = %+v, expect = %+v, actual = %+v", test.input, test.expect, actual)
+		}
+	}
 }

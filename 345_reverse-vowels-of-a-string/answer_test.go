@@ -11,6 +11,18 @@ package _reverse_vowels_of_a_string
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	s := "hello"
-	t.Logf("answer = %s", reverseVowels(s))
+	tests := []struct {
+		input  string
+		expect string
+	}{
+		{"hello", "holle"},
+		{"leetcode", "leotcede"},
+		{"aeiuo", "ouiea"},
+	}
+
+	for _, test := range tests {
+		if actual := reverseVowels(test.input); actual != test.expect {
+			t.Errorf("input = %s, expect = %s, actual = %s", test.input, test.expect, actual)
+		}
+	}
 }

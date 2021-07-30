@@ -8,8 +8,12 @@
 
 package _reverse_vowels_of_a_string
 
-var vowels = map[uint8]struct{}{
-	65: {}, 69: {}, 73: {}, 79: {}, 85: {}, 97: {}, 101: {}, 105: {}, 111: {}, 117: {},
+var vowels = map[byte]struct{}{
+	'a': {}, 'A': {},
+	'e': {}, 'E': {},
+	'i': {}, 'I': {},
+	'o': {}, 'O': {},
+	'u': {}, 'U': {},
 }
 
 func reverseVowels(s string) string {

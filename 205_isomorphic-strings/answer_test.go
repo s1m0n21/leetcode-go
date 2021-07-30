@@ -11,5 +11,25 @@ package _isomorphic_strings
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	t.Logf("answer = %t", isIsomorphic("badc", "baba"))
+	type input struct {
+		s string
+		t string
+	}
+
+	tests := []struct{
+		input input
+		expect bool
+	}{
+		{input{"egg", "add"}, true},
+		{input{"foo", "bar"}, false},
+		{input{"paper", "title"}, true},
+		{input{"123", "1234"}, false},
+		{input{"", ""}, true},
+	}
+
+	for _, test := range tests {
+		if actual := isIsomorphic(test.input.s, test.input.t); actual != test.expect {
+			t.Errorf("input = %+v, expect = %t, actual = %t", test.input, test.expect, actual)
+		}
+	}
 }

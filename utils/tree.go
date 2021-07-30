@@ -28,6 +28,27 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+func (n *TreeNode) Get(v int) *TreeNode {
+	var dfs func(*TreeNode)
+	var target *TreeNode
+	dfs = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+
+		if node.Val == v {
+			target = node
+			return
+		}
+
+		dfs(node.Left)
+		dfs(node.Right)
+	}
+	dfs(n)
+
+	return target
+}
+
 func (n *TreeNode) Preorder() []int {
 	return preorder(n)
 }

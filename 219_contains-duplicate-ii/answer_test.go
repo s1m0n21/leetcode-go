@@ -11,8 +11,23 @@ package _contains_duplicate_ii
 import "testing"
 
 func TestAnswer(t *testing.T) {
-	nums := []int{1,2,3,1,2,3}
-	k := 2
+	type input struct {
+		nums []int
+		k int
+	}
 
-	t.Logf("answer = %t", containsNearbyDuplicate(nums, k))
+	tests := []struct{
+		input input
+		expect bool
+	}{
+		{input{[]int{1,2,3,1}, 3}, true},
+		{input{[]int{1,0,1,1}, 1}, true},
+		{input{[]int{1,2,3,1,2,3}, 2}, false},
+	}
+
+	for _, test := range tests {
+		if actual := containsNearbyDuplicate(test.input.nums, test.input.k); actual != test.expect {
+			t.Errorf("input = %+v, expect = %t, actual = %t", test.input, test.expect, actual)
+		}
+	}
 }

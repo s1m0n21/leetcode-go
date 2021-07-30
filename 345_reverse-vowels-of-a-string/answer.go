@@ -8,14 +8,6 @@
 
 package _reverse_vowels_of_a_string
 
-var vowels = map[byte]struct{}{
-	'a': {}, 'A': {},
-	'e': {}, 'E': {},
-	'i': {}, 'I': {},
-	'o': {}, 'O': {},
-	'u': {}, 'U': {},
-}
-
 func reverseVowels(s string) string {
 	bytes := []byte(s)
 	i, j := 0, len(s)-1
@@ -37,8 +29,11 @@ func reverseVowels(s string) string {
 }
 
 func isVowel(s byte) bool {
-	if _, has := vowels[s]; has {
+	switch s {
+	case 'a','e','i','o','u','A','E','I','O','U':
 		return true
+	default:
 	}
+
 	return false
 }

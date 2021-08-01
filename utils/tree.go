@@ -11,6 +11,7 @@ package utils
 import (
 	"io/ioutil"
 	"os"
+	"reflect"
 	"strconv"
 
 	"github.com/awalterschulze/gographviz"
@@ -143,6 +144,10 @@ func newInts(v ...interface{}) []IntValue {
 	}
 
 	return ints
+}
+
+func SameTree(a, b *TreeNode) bool {
+	return reflect.DeepEqual(a.Inorder(), b.Inorder())
 }
 
 func MakeTreeNode(v ...interface{}) *TreeNode {

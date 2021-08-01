@@ -66,7 +66,7 @@ func MakeCycleListNode(nums ...int) *ListNode {
 	return head
 }
 
-func CompareList(a, b *ListNode) bool {
+func SameList(a, b *ListNode) bool {
 	for a != nil && b != nil {
 		if a.Val != b.Val {
 			return false

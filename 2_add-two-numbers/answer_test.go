@@ -29,7 +29,7 @@ func TestAnswer(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if actual := addTwoNumbers(test.input.l1, test.input.l2); !utils.CompareList(actual, test.expect) {
+		if actual := addTwoNumbers(test.input.l1, test.input.l2); !utils.SameList(actual, test.expect) {
 			t.Errorf("input = %+v, expect = %s, actual = %s", test.input, test.expect, actual)
 		}
 	}

@@ -11,16 +11,15 @@ package _reverse_linked_list
 import "github.com/s1m0n21/leetcode-go/utils"
 
 func reverseList(head *utils.ListNode) *utils.ListNode {
-	var pre *utils.ListNode = nil
+	var prev *utils.ListNode
 	var curr = head
 
 	for curr != nil {
 		next := curr.Next
-
-		curr.Next = pre
-		pre = curr
+		curr.Next = prev
+		prev = curr
 		curr = next
 	}
 
-	return pre
+	return prev
 }

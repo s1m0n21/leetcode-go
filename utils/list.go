@@ -16,15 +16,32 @@ type ListNode struct {
 }
 
 func (n *ListNode) String() string {
-	var str = ""
-	var i = n
-	for i != nil {
-		if str == "" {
-			str = fmt.Sprintf("%d", i.Val)
+	if n == nil {
+		return "NIL"
+	}
+
+	var str string
+	curr := n
+	head := n
+	loop := false
+
+	for curr != nil {
+		if len(str) == 0 {
+			str = fmt.Sprintf("%d", curr.Val)
 		} else {
-			str = fmt.Sprintf("%s -> %d", str, i.Val)
+			str = fmt.Sprintf("%s -> %d", str, curr.Val)
 		}
-		i = i.Next
+		if curr.Next == head {
+			loop = true
+			break
+		}
+		curr = curr.Next
+	}
+
+	if loop {
+		str = fmt.Sprintf("%s -> LOOP", str)
+	} else {
+		str = fmt.Sprintf("%s -> NIL", str)
 	}
 
 	return str

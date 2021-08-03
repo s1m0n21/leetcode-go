@@ -14,7 +14,20 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	head := utils.MakeListNode(1, 2, 3, 4, 5)
-	reversed := reverseList(head)
-	t.Logf("answer = %s", reversed.String())
+	tests := []struct{
+		input *utils.ListNode
+		expect *utils.ListNode
+	}{
+		{utils.MakeListNode(1,2,3,4,5), utils.MakeListNode(5,4,3,2,1)},
+		{utils.MakeListNode(9,8,7,6,5,4,3,2,1), utils.MakeListNode(1,2,3,4,5,6,7,8,9)},
+		{nil, nil},
+		{utils.MakeListNode(1), utils.MakeListNode(1)},
+	}
+
+	for _, test := range tests {
+		if actual := reverseList(test.input); !utils.SameList(test.expect, actual) {
+			t.Errorf("input = %s, expect = %s, actual = %s", test.input, test.expect, actual)
+		}
+	}
+
 }

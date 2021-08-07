@@ -13,20 +13,19 @@ func longestPalindrome(s string) string {
 		return s
 	}
 
-	var res []byte
-	b := []byte(s)
+	var res string
 
-	for i := 0; i < len(b); i++ {
+	for i := 0; i < len(s); i++ {
 		l, r := i, i
 		m := false
 		for {
-			if l-1 >= 0 && r+1 < len(b) && b[l-1] == b[r+1] {
+			if l-1 >= 0 && r+1 < len(s) && s[l-1] == s[r+1] {
 				l--
 				r++
 				m = true
-			} else if l-1 >= 0 && b[l-1] == b[i] && !m {
+			} else if l-1 >= 0 && s[l-1] == s[i] && !m {
 				l--
-			} else if r+1 < len(b) && b[r+1] == b[i] && !m {
+			} else if r+1 < len(s) && s[r+1] == s[i] && !m {
 				r++
 			} else {
 				break
@@ -34,9 +33,9 @@ func longestPalindrome(s string) string {
 		}
 
 		if r+1-l > len(res) {
-			res = b[l:r+1]
+			res = s[l:r+1]
 		}
 	}
 
-	return string(res)
+	return res
 }

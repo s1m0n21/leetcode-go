@@ -8,8 +8,6 @@
 
 package _n_queeens
 
-import "github.com/s1m0n21/leetcode-go/utils"
-
 func solveNQueens(n int) [][]string {
 	var out [][]string
 	var backtrack func([]string, int)
@@ -17,7 +15,6 @@ func solveNQueens(n int) [][]string {
 	backtrack = func(board []string, row int) {
 		if row == len(board) {
 			out = append(out, copyBoard(board))
-			utils.Log.Debugf("row = %d, board = %+v, out = %+v", row, board, out)
 			return
 		}
 
@@ -27,7 +24,6 @@ func solveNQueens(n int) [][]string {
 			}
 
 			board[row] = board[row][:col] + "Q" + board[row][col+1:]
-			utils.Log.Debugf("board = %+v(%p), out = %+v", board, board, out)
 			backtrack(board, row + 1)
 			board[row] = board[row][:col] + "." + board[row][col+1:]
 		}
@@ -43,8 +39,6 @@ func solveNQueens(n int) [][]string {
 	}
 
 	backtrack(board, 0)
-
-	utils.Log.Debugf("out = %+v", out)
 
 	return out
 }

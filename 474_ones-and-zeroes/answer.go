@@ -10,8 +10,6 @@ package _ones_and_zeroes
 
 import (
 	"strings"
-
-	"github.com/s1m0n21/leetcode-go/utils"
 )
 
 func findMaxForm(strs []string, m int, n int) int {
@@ -39,11 +37,6 @@ func findMaxForm(strs []string, m int, n int) int {
 				}
 			}
 		}
-
-		for _, v := range dp {
-			utils.Log.Debugf("%+v", v)
-		}
-		utils.Log.Debug()
 	}
 
 	return dp[len(strs)][m][n]

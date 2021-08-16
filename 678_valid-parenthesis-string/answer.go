@@ -13,31 +13,39 @@ func checkValidString(s string) bool {
 		return true
 	}
 
-	l, r := 0, 0
+	stack := make([]byte, 0)
+
 	for i := 0; i < len(s); i++ {
-		if s[i] == ')' {
-			r++
-		} else {
-			l++
-		}
-
-		if r > l {
-			return false
-		}
-	}
-
-	l, r = 0, 0
-	for i := len(s)-1; i >= 0; i-- {
-		if s[i] == '(' {
-			l++
-		} else {
-			r++
-		}
-
-		if l > r {
-			return false
+		switch s[i] {
+		case '(', '*':
+			stack = append(stack, s[i])
+		case ')':
+			if len(stack) > 0 {
+				del := false
+				for i := len(stack)-1; i >= 0; i-- {
+					if stack[i] == '(' {
+						stack = append(stack[:i], stack[i+1:]...)
+						del = true
+						break
+					}
+				}
+				if !del {
+					stack = stack[:len(stack)-1]
+				}
+			} else {
+				return false
+			}
 		}
 	}
 
-	return true
+	var c int
+	for _, v := range stack {
+		if v == '(' {
+			c++
+		} else {
+			if c > 0 { c-- }
+		}
+	}
+
+	return c == 0
 }

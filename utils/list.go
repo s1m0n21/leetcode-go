@@ -47,6 +47,17 @@ func (n *ListNode) String() string {
 	return str
 }
 
+func (n *ListNode) Get(v int) *ListNode {
+	curr := n
+	for curr != nil {
+		if curr.Val == v {
+			return curr
+		}
+		curr = curr.Next
+	}
+	return nil
+}
+
 func MakeListNode(nums ...int) *ListNode {
 	var head *ListNode
 	var tail *ListNode

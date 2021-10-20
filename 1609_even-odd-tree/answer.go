@@ -18,7 +18,7 @@ type elem struct {
 }
 
 func isEvenOddTree(root *utils.TreeNode) bool {
-	isEven := func(n int) bool { return n%2 == 0 }
+	isEven := func(n int) bool { return n&1 == 0 }
 	queue := []elem{{root, 0}}
 
 	var last *elem

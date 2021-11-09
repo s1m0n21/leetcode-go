@@ -95,42 +95,65 @@ func (n *TreeNode) Graph() {
 }
 
 func preorder(node *TreeNode) []int {
-	if node == nil {
-		return nil
+	var stack []*TreeNode
+	var nums []int
+
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			nums = append(nums, node.Val)
+			stack = append(stack, node)
+			node = node.Left
+		}
+
+		node = stack[len(stack)-1].Right
+		stack = stack[:len(stack)-1]
 	}
 
-	values := make([]int, 0)
-	values = append(values, node.Val)
-	values = append(values, preorder(node.Left)...)
-	values = append(values, preorder(node.Right)...)
-
-	return values
+	return nums
 }
 
 func inorder(node *TreeNode) []int {
-	if node == nil {
-		return nil
+	var stack []*TreeNode
+	var nums []int
+
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		nums = append(nums, node.Val)
+		node = node.Right
 	}
 
-	values := make([]int, 0)
-	values = append(values, inorder(node.Left)...)
-	values = append(values, node.Val)
-	values = append(values, inorder(node.Right)...)
-
-	return values
+	return nums
 }
 
 func postorder(node *TreeNode) []int {
-	if node == nil {
-		return nil
+	var stack []*TreeNode
+	var prev *TreeNode
+	var nums []int
+
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		if node.Right == nil || node.Right == prev {
+			nums = append(nums, node.Val)
+			prev = node
+			node = nil
+		} else {
+			stack = append(stack, node)
+			node = node.Right
+		}
 	}
 
-	values := make([]int, 0)
-	values = append(values, postorder(node.Left)...)
-	values = append(values, postorder(node.Right)...)
-	values = append(values, node.Val)
-
-	return values
+	return nums
 }
 
 func newInts(v ...interface{}) []IntValue {

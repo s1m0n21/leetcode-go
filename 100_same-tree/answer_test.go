@@ -14,8 +14,8 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	p := utils.MakeTreeNode(1,2,3)
-	q := utils.MakeTreeNode(1,2,3)
+	p := utils.MakeBinaryTree(1,2,3)
+	q := utils.MakeBinaryTree(1,2,3)
 
 	t.Logf("answer = %t", isSameTree(p, q))
 }

@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(5,4,8,11,nil,13,4,7,2,nil,nil,nil,1)
+	root := utils.MakeBinaryTree(5,4,8,11,nil,13,4,7,2,nil,nil,nil,1)
 	targetSum := 22
 
 	t.Logf("answer = %t", hasPathSum(root,targetSum))

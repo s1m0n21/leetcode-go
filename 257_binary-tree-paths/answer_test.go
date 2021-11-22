@@ -19,8 +19,8 @@ func TestAnswer(t *testing.T) {
 		input  *utils.TreeNode
 		expect []string
 	}{
-		{utils.MakeTreeNode(1, 2, 3, nil, 5), []string{"1->2->5", "1->3"}},
-		{utils.MakeTreeNode(1, 2, 3, 4, 5), []string{"1->2->4", "1->2->5", "1->3"}},
+		{utils.MakeBinaryTree(1, 2, 3, nil, 5), []string{"1->2->5", "1->3"}},
+		{utils.MakeBinaryTree(1, 2, 3, 4, 5), []string{"1->2->4", "1->2->5", "1->3"}},
 	}
 
 	for _, test := range tests {

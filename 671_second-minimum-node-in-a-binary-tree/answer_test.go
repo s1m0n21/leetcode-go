@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(2,2,5,nil,nil,5,5)
+	root := utils.MakeBinaryTree(2,2,5,nil,nil,5,5)
 
 	t.Logf("answer = %d", findSecondMinimumValue(root))
 }

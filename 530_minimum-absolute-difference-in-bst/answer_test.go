@@ -18,7 +18,7 @@ func TestAnswer(t *testing.T) {
 		input  *utils.TreeNode
 		expect int
 	}{
-		{utils.MakeTreeNode(1, nil, 3, 2), 1},
+		{utils.MakeBinaryTree(1, nil, 3, 2), 1},
 	}
 
 	for _, test := range tests {

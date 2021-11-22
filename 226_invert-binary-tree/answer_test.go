@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(4,2,7,1,3,6,9)
+	root := utils.MakeBinaryTree(4,2,7,1,3,6,9)
 	invertTree(root)
 	root.Graph()
 }

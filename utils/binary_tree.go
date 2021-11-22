@@ -1,8 +1,8 @@
 /**
  * @Author         : s1m0n21
- * @Description    : Tree util
+ * @Description    : Binary tree util
  * @Project        : leetcode-go
- * @File           : tree.go
+ * @File           : binary_tree.go
  * @Date           : 2021/7/23 11:01 上午
  */
 
@@ -173,17 +173,17 @@ func SameTree(a, b *TreeNode) bool {
 	return reflect.DeepEqual(a.Inorder(), b.Inorder())
 }
 
-func MakeTreeNode(v ...interface{}) *TreeNode {
+func MakeBinaryTree(v ...interface{}) *TreeNode {
 	nums := newInts(v...)
 	if len(nums) == 0 || nums[0].nil {
 		return nil
 	}
-	root := makeTreeNode(nums)
+	root := makeBinaryTree(nums)
 
 	return root
 }
 
-func makeTreeNode(nums []IntValue) *TreeNode {
+func makeBinaryTree(nums []IntValue) *TreeNode {
 	if len(nums) == 0 || nums[0].nil {
 		return nil
 	}

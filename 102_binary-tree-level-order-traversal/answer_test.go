@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(3,9,nil,nil,20,15,nil,nil,7)
+	root := utils.MakeBinaryTree(3,9,nil,nil,20,15,nil,nil,7)
 
 	t.Logf("answer = %+v", levelOrder(root))
 }

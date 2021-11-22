@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	iter := Constructor(utils.MakeTreeNode(7, 3, 15, nil, nil, 9, 20))
+	iter := Constructor(utils.MakeBinaryTree(7, 3, 15, nil, nil, 9, 20))
 
 	t.Logf("next = %d", iter.Next())
 	t.Logf("next = %d", iter.Next())

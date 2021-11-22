@@ -18,10 +18,10 @@ func TestAnswer(t *testing.T) {
 		input *utils.TreeNode
 		expect bool
 	}{
-		{utils.MakeTreeNode(2,1,3), true},
-		{utils.MakeTreeNode(5,1,4,nil,nil,3,6), false},
-		{utils.MakeTreeNode(2,2,2), false},
-		{utils.MakeTreeNode(5,4,6,nil,nil,3,7), false},
+		{utils.MakeBinaryTree(2,1,3), true},
+		{utils.MakeBinaryTree(5,1,4,nil,nil,3,6), false},
+		{utils.MakeBinaryTree(2,2,2), false},
+		{utils.MakeBinaryTree(5,4,6,nil,nil,3,7), false},
 	}
 
 	for _, test := range tests {

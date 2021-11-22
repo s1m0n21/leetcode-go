@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(1,2,2,nil,3,nil,3)
+	root := utils.MakeBinaryTree(1,2,2,nil,3,nil,3)
 
 	t.Logf("answer = %t", isSymmetric(root))
 }

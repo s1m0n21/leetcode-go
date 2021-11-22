@@ -24,10 +24,10 @@ func TestAnswer(t *testing.T) {
 		input  input
 		expect [][]int
 	}{
-		{input{utils.MakeTreeNode(5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, 5, 1), 22}, [][]int{{5, 4, 11, 2}, {5, 8, 4, 5}}},
-		{input{utils.MakeTreeNode(1, 2, 3), 5}, [][]int{}},
-		{input{utils.MakeTreeNode(1, 2), 0}, [][]int{}},
-		{input{utils.MakeTreeNode(-2, nil, -3), -5}, [][]int{{-2,-3}}},
+		{input{utils.MakeBinaryTree(5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, 5, 1), 22}, [][]int{{5, 4, 11, 2}, {5, 8, 4, 5}}},
+		{input{utils.MakeBinaryTree(1, 2, 3), 5}, [][]int{}},
+		{input{utils.MakeBinaryTree(1, 2), 0}, [][]int{}},
+		{input{utils.MakeBinaryTree(-2, nil, -3), -5}, [][]int{{-2,-3}}},
 	}
 
 	for _, test := range tests {

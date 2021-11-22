@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(1,2,2,3,3,nil,nil,4,4)
+	root := utils.MakeBinaryTree(1,2,2,3,3,nil,nil,4,4)
 
 	t.Logf("answer = %t", isBalanced(root))
 }

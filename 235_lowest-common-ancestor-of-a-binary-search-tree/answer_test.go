@@ -18,7 +18,7 @@ func TestAnswer(t *testing.T) {
 		root, p, q *utils.TreeNode
 	}
 
-	root := utils.MakeTreeNode(6,2,8,0,4,7,9,nil,nil,3,5)
+	root := utils.MakeBinaryTree(6,2,8,0,4,7,9,nil,nil,3,5)
 
 	tests := []struct{
 		input input

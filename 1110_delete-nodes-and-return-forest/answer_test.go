@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(1, 2, 3, 4, 5, 6, 7)
+	root := utils.MakeBinaryTree(1, 2, 3, 4, 5, 6, 7)
 	forest := delNodes(root, []int{3, 5}) // expect contains: [[1,2,4],[6],[7]]
 	for _, root := range forest {
 		t.Logf("%+v", root.Preorder())

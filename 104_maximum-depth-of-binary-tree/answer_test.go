@@ -14,7 +14,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	root := utils.MakeTreeNode(3,9,20,nil,nil,15,7)
+	root := utils.MakeBinaryTree(3,9,20,nil,nil,15,7)
 
 	t.Logf("answer = %d", maxDepth(root))
 }

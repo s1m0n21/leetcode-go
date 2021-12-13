@@ -8,38 +8,40 @@
 
 package _sort_an_array
 
-//More better
-//func sortArray(nums []int) []int {
-//	sort.Ints(nums)
-//	return nums
-//}
+import "math/rand"
 
 func sortArray(nums []int) []int {
-	quickSort(nums, 0, len(nums)-1)
+	pivot(nums, 0, len(nums)-1)
 	return nums
 }
 
-func quickSort(nums []int, left, right int) {
-	if left < right {
-		pivot := partition(nums, left, right)
-		quickSort(nums, left, pivot-1)
-		quickSort(nums, pivot+1, right)
+func pivot(nums []int, l, r int) {
+	if l >= r {
+		return
 	}
-}
 
-func partition(nums []int, left, right int) int {
-	pivot := nums[left]
-	for left < right {
-		for left < right && pivot <= nums[right] {
-			right--
-		}
-		nums[left] = nums[right]
+	mid := rand.Int()%(r-l+1) + l
+	nums[l], nums[mid] = nums[mid], nums[l]
+	i, j := l+1, r
+	x := nums[l]
 
-		for left < right && pivot >= nums[left] {
-			left++
+	for i < j {
+		for i < j && nums[i] <= x {
+			i++
 		}
-		nums[right] = nums[left]
+		for i < j && nums[j] >= x {
+			j--
+		}
+		nums[i], nums[j] = nums[j], nums[i]
 	}
-	nums[left] = pivot
-	return left
+
+	if nums[i] <= x {
+		nums[i], nums[l] = nums[l], nums[i]
+	} else {
+		i--
+		nums[i], nums[l] = nums[l], nums[i]
+	}
+
+	pivot(nums, i+1, r)
+	pivot(nums, l, i-1)
 }

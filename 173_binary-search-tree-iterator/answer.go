@@ -15,22 +15,21 @@ type BSTIterator struct {
 }
 
 func Constructor(root *utils.TreeNode) BSTIterator {
-	var traversal func(*utils.TreeNode) []int
+	var stack []*utils.TreeNode
+	var nums []int
 
-	traversal = func(node *utils.TreeNode) []int {
-		if node == nil {
-			return nil
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
 		}
-
-		values := make([]int, 0)
-		values = append(values, traversal(node.Left)...)
-		values = append(values, node.Val)
-		values = append(values, traversal(node.Right)...)
-
-		return values
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		nums = append(nums, root.Val)
+		root = root.Right
 	}
 
-	return BSTIterator{traversal(root)}
+	return BSTIterator{nums}
 }
 
 func (this *BSTIterator) Next() int {

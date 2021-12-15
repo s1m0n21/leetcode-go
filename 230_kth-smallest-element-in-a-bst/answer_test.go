@@ -27,9 +27,9 @@ func TestAnswer(t *testing.T) {
 		{input{utils.MakeBinaryTree(5, 3, 6, 2, 4, nil, nil, 1), 3}, 3},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		if actual := kthSmallest(test.input.root, test.input.k); actual != test.expect {
-			t.Errorf("input = %+v, expect = %d, actual = %d", test.input, test.expect, actual)
+			t.Errorf("%d: input = %+v, expect = %d, actual = %d", i, test.input, test.expect, actual)
 		}
 	}
 }

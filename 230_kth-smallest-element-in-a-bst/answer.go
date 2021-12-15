@@ -11,18 +11,19 @@ package _kth_smallest_element_in_a_bst
 import "github.com/s1m0n21/leetcode-go/utils"
 
 func kthSmallest(root *utils.TreeNode, k int) int {
-	return travel(root)[k-1]
-}
+	var stack []*utils.TreeNode
+	var nums []int
 
-func travel(node *utils.TreeNode) []int {
-	if node == nil {
-		return nil
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
+		}
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		nums = append(nums, root.Val)
+		root = root.Right
 	}
 
-	values := make([]int, 0)
-	values = append(values, travel(node.Left)...)
-	values = append(values, node.Val)
-	values = append(values, travel(node.Right)...)
-
-	return values
+	return nums[k-1]
 }

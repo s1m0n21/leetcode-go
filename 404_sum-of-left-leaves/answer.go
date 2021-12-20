@@ -15,23 +15,20 @@ func sumOfLeftLeaves(root *utils.TreeNode) int {
 		return 0
 	}
 
-	var dfs func(*utils.TreeNode) int
-	dfs = func(root *utils.TreeNode) int {
-		res := 0
-		if root.Left != nil {
-			if root.Left.Left == nil && root.Left.Right == nil {
-				res += root.Left.Val
-			} else {
-				res += dfs(root.Left)
+	var sum int
+	var stack []*utils.TreeNode
+
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			if root.Left != nil && root.Left.Left == nil && root.Left.Right == nil {
+				sum += root.Left.Val
 			}
+			root = root.Left
 		}
-
-		if root.Right != nil {
-			res += dfs(root.Right)
-		}
-
-		return res
+		root = stack[len(stack)-1].Right
+		stack = stack[:len(stack)-1]
 	}
 
-	return dfs(root)
+	return sum
 }

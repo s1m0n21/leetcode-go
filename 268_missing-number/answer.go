@@ -9,14 +9,9 @@
 package _missing_number
 
 func missingNumber(nums []int) int {
-	ans := 0
-	for i := 0; i <= len(nums); i++ {
-		ans += i
+	ans := len(nums)
+	for i, n := range nums {
+		ans ^= i ^ n
 	}
-
-	for _, n := range nums {
-		ans -= n
-	}
-
 	return ans
 }

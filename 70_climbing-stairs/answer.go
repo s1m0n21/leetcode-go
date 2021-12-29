@@ -9,13 +9,18 @@
 package _climbing_stairs
 
 func climbStairs(n int) int {
-	memo := make([]int, n+1)
-
-	memo[0] = 1
-	memo[1] = 1
-	for i := 2; i <= n ; i++ {
-		memo[i] = memo[i-1] + memo[i-2]
+	if n <= 1 {
+		return 1
+	} else if n == 2 {
+		return 2
 	}
 
-	return memo[n]
+	var a, b, t = 1, 2, 0
+	for i := 3; i <= n; i++ {
+		t = a + b
+		a = b
+		b = t
+	}
+
+	return t
 }

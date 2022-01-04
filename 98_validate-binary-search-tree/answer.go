@@ -11,7 +11,7 @@ package _validate_binary_search_tree
 import "github.com/s1m0n21/leetcode-go/utils"
 
 func isValidBST(root *utils.TreeNode) bool {
-	return checkBST(root, 1<<63 - 1, -1 << 63)
+	return checkBST(root, 1<<63-1, -1<<63)
 }
 
 func checkBST(root *utils.TreeNode, upper, lower int) bool {

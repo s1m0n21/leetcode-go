@@ -14,24 +14,24 @@ import (
 )
 
 func getMinimumDifference(root *utils.TreeNode) int {
-	var travel func(node *utils.TreeNode)
+	var dfs func(node *utils.TreeNode)
 	var prev *utils.TreeNode
 	var min = math.MaxInt32
 
-	travel = func(node *utils.TreeNode) {
+	dfs = func(node *utils.TreeNode) {
 		if node == nil {
 			return
 		}
 
-		travel(node.Left)
-		if prev != nil && node.Val - prev.Val < min {
+		dfs(node.Left)
+		if prev != nil && node.Val-prev.Val < min {
 			min = node.Val - prev.Val
 		}
 		prev = node
-		travel(node.Right)
+		dfs(node.Right)
 	}
 
-	travel(root)
+	dfs(root)
 
 	return min
 }

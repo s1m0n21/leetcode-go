@@ -8,34 +8,52 @@
 
 package _design_hashmap
 
+import "container/list"
+
+const base = 1009
+
 type MyHashMap struct {
-	m map[int]int
+	data []list.List
 }
 
+type entry struct {
+	key, val int
+}
 
-/** Initialize your data structure here. */
 func Constructor() MyHashMap {
-	return MyHashMap{make(map[int]int)}
+	return MyHashMap{data: make([]list.List, base)}
 }
 
-
-/** value will always be non-negative. */
-func (this *MyHashMap) Put(key int, value int)  {
-	this.m[key] = value
-}
-
-
-/** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
-func (this *MyHashMap) Get(key int) int {
-	if val, has := this.m[key]; has {
-		return val
+func (m *MyHashMap) Put(key int, value int) {
+	h := hash(key)
+	for e := m.data[h].Front(); e != nil; e = e.Next() {
+		if et := e.Value.(entry); et.key == key {
+			e.Value = entry{key, value}
+			return
+		}
 	}
+	m.data[h].PushBack(entry{key, value})
+}
 
+func (m *MyHashMap) Get(key int) int {
+	h := hash(key)
+	for e := m.data[h].Front(); e != nil; e = e.Next() {
+		if et := e.Value.(entry); et.key == key {
+			return et.val
+		}
+	}
 	return -1
 }
 
+func (m *MyHashMap) Remove(key int) {
+	h := hash(key)
+	for e := m.data[h].Front(); e != nil; e = e.Next() {
+		if e.Value.(entry).key == key {
+			m.data[h].Remove(e)
+		}
+	}
+}
 
-/** Removes the mapping of the specified value key if this map contains a mapping for the key */
-func (this *MyHashMap) Remove(key int)  {
-	delete(this.m, key)
+func hash(key int) int {
+	return key % base
 }

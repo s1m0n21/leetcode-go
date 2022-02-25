@@ -28,7 +28,7 @@ func pathSum(root *utils.TreeNode, targetSum int) [][]int {
 		defer func() { path = path[:len(path)-1] }()
 
 		if node.Left == nil && node.Right == nil && target-node.Val == 0 {
-			res = append(res, copySlice(path))
+			res = append(res, append([]int(nil), path...))
 		}
 
 		dfs(node.Left, target-node.Val)
@@ -37,12 +37,4 @@ func pathSum(root *utils.TreeNode, targetSum int) [][]int {
 	dfs(root, targetSum)
 
 	return res
-}
-
-func copySlice(s []int) []int {
-	var n = make([]int, len(s))
-	for i := range s {
-		n[i] = s[i]
-	}
-	return n
 }

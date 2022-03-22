@@ -54,9 +54,9 @@ func (tc *TestCase[I, E]) GetExpect() E {
 func (tc *TestCase[I, E]) RunTest() {
 	st := time.Now()
 	if actual := tc.fn(tc.input); !reflect.DeepEqual(actual, tc.expect) {
-		tc.t.Errorf("INPUT( %#v ) EXPECT( %#v ) ACTUAL( %#v ) --- FAIL", tc.input, tc.expect, actual)
+		tc.t.Errorf("\033[31mFAIL\033[0m | INPUT: %#v | EXPECT: \033[32m%#v\033[0m | ACTUAL: \033[31m%#v\033[0m", tc.input, tc.expect, actual)
 	} else {
-		tc.t.Logf("INPUT( %#v ) ELAPSED( %s ) --- PASS", tc.input, time.Now().Sub(st).String())
+		tc.t.Logf("\033[32mPASS\033[0m | INPUT: %#v | ELAPSED: %s", tc.input, time.Now().Sub(st).String())
 	}
 }
 

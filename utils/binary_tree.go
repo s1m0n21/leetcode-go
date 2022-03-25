@@ -9,13 +9,14 @@
 package utils
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"reflect"
-	"strconv"
+
+	"github.com/s1m0n21/exec-go"
 
 	"github.com/awalterschulze/gographviz"
-	"github.com/s1m0n21/exec-go"
 )
 
 type IntValue struct {
@@ -62,36 +63,109 @@ func (n *TreeNode) Postorder() []int {
 	return postorder(n)
 }
 
-func (n *TreeNode) Graph() {
-	ast, _ := gographviz.Parse([]byte("digraph G{}"))
+func (n *TreeNode) Graph(name string) {
+	ast, _ := gographviz.Parse([]byte(`digraph G{}`))
 	graph := gographviz.NewGraph()
-	gographviz.Analyse(ast, graph)
+	_ = gographviz.Analyse(ast, graph)
 
 	queue := make([]*TreeNode, 0)
 	queue = append(queue, n)
 
+	graph.AddAttr("G", "splines", "line")
+
 	for len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
+		placeholder := fmt.Sprintf("__%p", node)
 
-		graph.AddNode("G", strconv.Itoa(node.Val), nil)
-		if node.Left != nil {
-			graph.AddEdge(strconv.Itoa(node.Val), strconv.Itoa(node.Left.Val), true, nil)
-			queue = append(queue, node.Left)
+		var distance, rightDistance int
+		var target, rightTarget *TreeNode
+
+		x := node.Left
+		for x != nil {
+			distance++
+			target = x
+			x = x.Right
 		}
+		x = node.Right
+		for x != nil {
+			rightDistance++
+			rightTarget = x
+			x = x.Left
+		}
+
+		if rightDistance < distance {
+			distance = rightDistance
+			target = rightTarget
+		}
+
+		if distance > 0 {
+			_ = graph.AddSubGraph("G", fmt.Sprintf("s_%p", node), map[string]string{"rank": "same"})
+			_ = graph.AddNode(fmt.Sprintf("s_%p", node), placeholder, map[string]string{
+				"group": fmt.Sprintf("_%p", node),
+				"label": "\"\"",
+				"width": "0",
+				"style": "invis",
+			})
+			_ = graph.AddNode(fmt.Sprintf("s_%p", node), fmt.Sprintf("_%p", target), map[string]string{
+				"group": fmt.Sprintf("_%p", target),
+				"label": fmt.Sprintf("%d", target.Val),
+				"shape": "circle",
+			})
+		} else {
+			_ = graph.AddNode("G", placeholder, map[string]string{
+				"group": fmt.Sprintf("_%p", node),
+				"label": "\"\"",
+				"width": "0",
+				"style": "invis",
+			})
+		}
+
+		if !graph.IsNode(fmt.Sprintf("_%p", node)) {
+			_ = graph.AddNode("G", fmt.Sprintf("_%p", node), map[string]string{
+				"group": fmt.Sprintf("_%p", node),
+				"label": fmt.Sprintf("%d", node.Val),
+				"shape": "circle",
+			})
+		}
+
+		if node.Left == nil && node.Right == nil {
+			continue
+		}
+
+		if node.Left != nil {
+			_ = graph.AddEdge(fmt.Sprintf("_%p", node), fmt.Sprintf("_%p", node.Left), true, nil)
+			queue = append(queue, node.Left)
+		} else {
+			_ = graph.AddEdge(fmt.Sprintf("_%p", node), placeholder, true, map[string]string{
+				"style": "invis",
+			})
+		}
+
+		_ = graph.AddEdge(fmt.Sprintf("_%p", node), placeholder, true, map[string]string{
+			"group": fmt.Sprintf("_%p", node),
+			"label": "\"\"",
+			"width": "0",
+			"style": "invis",
+		})
+
 		if node.Right != nil {
-			graph.AddEdge(strconv.Itoa(node.Val), strconv.Itoa(node.Right.Val), true, nil)
+			_ = graph.AddEdge(fmt.Sprintf("_%p", node), fmt.Sprintf("_%p", node.Right), true, nil)
 			queue = append(queue, node.Right)
+		} else {
+			_ = graph.AddEdge(fmt.Sprintf("_%p", node), placeholder, true, map[string]string{
+				"style": "invis",
+			})
 		}
 	}
 
-	ioutil.WriteFile("tree.gv", []byte(graph.String()), 0666)
+	_ = ioutil.WriteFile(fmt.Sprintf("%s.gv", name), []byte(graph.String()), 0o666)
 
 	cmd := gexec.NewCommand()
-	cmd.ExecSync("dot", "tree.gv", "-T", "svg", "-o", "tree.svg")
-	cmd.ExecSync("open", "tree.svg")
+	_ = cmd.ExecSync("dot", fmt.Sprintf("%s.gv", name), "-T", "svg", "-o", fmt.Sprintf("%s.svg", name))
+	_ = cmd.ExecSync("open", fmt.Sprintf("%s.svg", name))
 
-	os.Remove("tree.gv")
+	_ = os.Remove(fmt.Sprintf("%s.gv", name))
 }
 
 func preorder(node *TreeNode) []int {
@@ -188,7 +262,7 @@ func makeBinaryTree(nums []IntValue) *TreeNode {
 		return nil
 	}
 
-	var queue = make([]*TreeNode, 0)
+	queue := make([]*TreeNode, 0)
 	root := &TreeNode{Val: nums[0].val}
 	nums = nums[1:]
 	queue = append(queue, root)

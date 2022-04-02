@@ -10,47 +10,34 @@ package _binary_tree_level_order_traversal
 
 import "github.com/s1m0n21/leetcode-go/utils"
 
-type elem struct {
-	node  *utils.TreeNode
-	level int
-}
-
 func levelOrder(root *utils.TreeNode) [][]int {
 	if root == nil {
 		return nil
 	}
 
-	var res = make([][]int, 0)
-	var queue = make([]elem, 0)
-
-	queue = append(queue, elem{
-		node:  root,
-		level: 0,
-	})
+	ret := make([][]int, 0)
+	queue := []*utils.TreeNode{root}
+	i := 0
 
 	for len(queue) > 0 {
-		e := queue[0]
-		queue = queue[1:]
+		q := queue
+		queue = nil
+		for len(q) > 0 {
+			if len(ret) == i {
+				ret = append(ret, []int{})
+			}
 
-		if e.level == len(res) {
-			res = append(res, []int{})
+			ret[i] = append(ret[i], q[0].Val)
+			if q[0].Left != nil {
+				queue = append(queue, q[0].Left)
+			}
+			if q[0].Right != nil {
+				queue = append(queue, q[0].Right)
+			}
+			q = q[1:]
 		}
-		res[e.level] = append(res[e.level], e.node.Val)
-
-		if e.node.Left != nil {
-			queue = append(queue, elem{
-				node:  e.node.Left,
-				level: e.level + 1,
-			})
-		}
-
-		if e.node.Right != nil {
-			queue = append(queue, elem{
-				node:  e.node.Right,
-				level: e.level + 1,
-			})
-		}
+		i++
 	}
 
-	return res
+	return ret
 }

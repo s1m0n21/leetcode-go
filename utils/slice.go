@@ -2,7 +2,7 @@
  * @Author         : s1m0n21
  * @Description    : Slice util
  * @Project        : leetcode-go
- * @File           : slice.go
+ * @File           : outputSlice.go
  * @Date           : 2021/7/29 4:36 下午
  */
 

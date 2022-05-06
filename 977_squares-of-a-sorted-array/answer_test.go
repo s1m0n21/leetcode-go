@@ -15,10 +15,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	testCase := utils.NewTestCase(t, func(i []int) []int {
-		c := append([]int(nil), i...)
-		return sortedSquares(c)
-	})
+	testCase := utils.NewTestCase(t,  sortedSquares)
 
 	testCase.SetAndRun([]int{-4, -1, 0, 3, 10}, []int{0, 1, 9, 16, 100})
 	testCase.SetAndRun([]int{-7, -3, 2, 3, 11}, []int{4, 9, 9, 49, 121})

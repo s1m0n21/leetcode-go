@@ -22,7 +22,8 @@ func TestSolution(t *testing.T) {
 
 	testCase := utils.NewTestCase(t, func(i input) *utils.ListNode {
 		return deleteNode(i.head, i.val)
-	}, utils.OptionCheckFunc(utils.SameList))
+	})
+	testCase.ConfigSetCheckFunc(utils.SameList)
 
 	testCase.SetAndRun(input{utils.MakeListNode(1, 2, 3, 4), 3}, utils.MakeListNode(1, 2, 4))
 	testCase.SetAndRun(input{utils.MakeListNode(1, 2, 3, 4), 1}, utils.MakeListNode(2, 3, 4))

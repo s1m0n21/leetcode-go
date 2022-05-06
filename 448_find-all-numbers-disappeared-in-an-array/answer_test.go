@@ -15,10 +15,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	testCase := utils.NewTestCase(t, func(n []int) []int {
-		c := append([]int(nil), n...)
-		return findDisappearedNumbers(c)
-	})
+	testCase := utils.NewTestCase(t, findDisappearedNumbers)
 
 	testCase.SetAndRun([]int{4, 3, 2, 7, 8, 2, 3, 1}, []int{5, 6})
 	testCase.SetAndRun([]int{1, 1}, []int{2})

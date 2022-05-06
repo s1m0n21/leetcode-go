@@ -16,9 +16,7 @@ import (
 
 func TestAnswer(t *testing.T) {
 	cache := Constructor(2)
-	testCase := utils.NewTestCase(t, func(i int) int {
-		return cache.Get(i)
-	})
+	testCase := utils.NewTestCase(t, cache.Get)
 
 	cache.Put(1, 1)
 	cache.Put(2, 2)

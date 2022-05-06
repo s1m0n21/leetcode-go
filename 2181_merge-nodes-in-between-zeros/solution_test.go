@@ -15,7 +15,8 @@ import (
 )
 
 func TestSolution(t *testing.T) {
-	testCase := utils.NewTestCase(t, mergeNodes, utils.OptionCheckFunc(utils.SameList))
+	testCase := utils.NewTestCase(t, mergeNodes)
+	testCase.ConfigSetCheckFunc(utils.SameList)
 
 	testCase.SetAndRun(utils.MakeListNode(0, 3, 1, 0, 4, 5, 2, 0), utils.MakeListNode(4, 11))
 	testCase.SetAndRun(utils.MakeListNode(0, 1, 0, 3, 0, 2, 2, 0), utils.MakeListNode(1, 3, 4))

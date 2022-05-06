@@ -15,13 +15,7 @@ import (
 )
 
 func TestAnswer(t *testing.T) {
-	testCase := utils.NewTestCase(t, func(i [][]int) int {
-		var c [][]int
-		for _, n := range i {
-			c = append(c, append([]int(nil), n...))
-		}
-		return minFallingPathSum(c)
-	})
+	testCase := utils.NewTestCase(t, minFallingPathSum)
 
 	testCase.SetAndRun([][]int{{2, 1, 3}, {6, 5, 4}, {7, 8, 9}}, 13)
 	testCase.SetAndRun([][]int{{-19, 57}, {-40, -5}}, -59)

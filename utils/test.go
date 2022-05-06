@@ -28,24 +28,10 @@ type TestCase[I, E any] struct {
 	expect      E
 	fn          func(I) E
 	config      testCaseConfig[E]
-	outputSlice bool
-	inputSlice  bool
 }
 
 func NewTestCase[I, E any](t *testing.T, fn func(I) E) TestCase[I, E] {
-	tc := TestCase[I, E]{fn: fn, config: testCaseConfig[E]{}, t: t}
-
-	kind := reflect.TypeOf(tc.expect).Kind()
-	if kind == reflect.Slice || kind == reflect.Array {
-		tc.outputSlice = true
-	}
-
-	kind = reflect.TypeOf(tc.input).Kind()
-	if kind == reflect.Slice || kind == reflect.Array {
-		tc.inputSlice = true
-	}
-
-	return tc
+	return TestCase[I, E]{fn: fn, config: testCaseConfig[E]{}, t: t}
 }
 
 func (tc *TestCase[I, E]) SetInput(v I) {
@@ -95,7 +81,7 @@ func (tc *TestCase[I, E]) check(v E) bool {
 
 func (tc *TestCase[I, E]) RunTest() {
 	var copies []any
-	if tc.inputSlice {
+	if tc.isSlice(tc.input) {
 		copies = tc.copySlice(tc.input)
 	}
 
@@ -105,17 +91,15 @@ func (tc *TestCase[I, E]) RunTest() {
 
 	if !tc.check(actual) {
 		if copies != nil {
-			tc.t.Errorf("\033[31mFAIL\033[0m | INPUT: %v | EXPECT: \033[32m%v\033[0m | ACTUAL: \033[31m%v\033[0m",
-				copies, tc.expect, actual)
+			tc.failed(copies, actual)
 		} else {
-			tc.t.Errorf("\033[31mFAIL\033[0m | INPUT: %v | EXPECT: \033[32m%v\033[0m | ACTUAL: \033[31m%v\033[0m",
-				tc.input, tc.expect, actual)
+			tc.failed(tc.input, actual)
 		}
 	} else {
 		if copies != nil {
-			tc.t.Logf("\033[32mPASS\033[0m | INPUT: %v | ELAPSED: %s", copies, elapsed)
+			tc.success(copies, elapsed)
 		} else {
-			tc.t.Logf("\033[32mPASS\033[0m | INPUT: %v | ELAPSED: %s", tc.input, elapsed)
+			tc.success(tc.input, elapsed)
 		}
 	}
 }
@@ -124,6 +108,15 @@ func (tc *TestCase[I, E]) SetAndRun(input I, expect E) {
 	tc.SetInput(input)
 	tc.SetExpect(expect)
 	tc.RunTest()
+}
+
+func (tc *TestCase[I, E]) success(input any, elapsed string) {
+	tc.t.Logf("\033[32mPASS\033[0m | INPUT: %v | ELAPSED: %s", input, elapsed)
+}
+
+func (tc *TestCase[I, E]) failed(input, actual any) {
+	tc.t.Errorf("\033[31mFAIL\033[0m | INPUT: %v | EXPECT: \033[32m%v\033[0m | ACTUAL: \033[31m%v\033[0m",
+		input, tc.expect, actual)
 }
 
 func (tc *TestCase[I, E]) hash(v any) uint64 {
@@ -147,7 +140,7 @@ func (tc *TestCase[I, E]) copySlice(v any) []any {
 
 	value := reflect.ValueOf(v)
 	for i := 0; i < value.Len(); i++ {
-		if value.Index(i).Kind() == reflect.Slice {
+		if value.Index(i).Kind() == reflect.Slice || value.Index(i).Kind() == reflect.Array {
 			copies = append(copies, tc.copySlice(value.Index(i).Interface()))
 		} else {
 			copies = append(copies, value.Index(i).Interface())
@@ -157,14 +150,19 @@ func (tc *TestCase[I, E]) copySlice(v any) []any {
 	return copies
 }
 
+func (tc *TestCase[I, E]) isSlice(v any) bool {
+	kind := reflect.TypeOf(v).Kind()
+	return kind == reflect.Slice || kind == reflect.Array
+}
+
 func (tc *TestCase[I, E]) ConfigSetCheckFunc(fn func(a, b E) bool) {
 	tc.config.checkFunc = fn
 }
 
 func (tc *TestCase[I, E]) ConfigSetOutputInAnyOrder() {
 	kind := reflect.TypeOf(tc.expect).Kind()
-	if !tc.outputSlice {
-		tc.t.Fatalf("output type must be a `outputSlice` or an `array`, got `%s`", kind.String())
+	if !tc.isSlice(tc.expect) {
+		tc.t.Fatalf("output type must be a `slice` or an `array`, got `%s`", kind.String())
 	}
 
 	tc.config.outputInAnyOrder = true

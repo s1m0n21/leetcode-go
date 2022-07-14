@@ -8,25 +8,25 @@
 
 package _prefix_and_suffix_search
 
-type dictTree struct {
-	next    [26]*dictTree
+type trie struct {
+	next    [26]*trie
 	indices []int
 }
 
 type WordFilter struct {
-	prefix *dictTree
-	suffix *dictTree
+	prefix *trie
+	suffix *trie
 }
 
 func Constructor(words []string) WordFilter {
-	prefix := &dictTree{}
-	suffix := &dictTree{}
+	prefix := &trie{}
+	suffix := &trie{}
 
 	for i, word := range words {
 		currPrefix := prefix
 		for j := 0; j < len(word); j++ {
 			if currPrefix.next[word[j]-'a'] == nil {
-				currPrefix.next[word[j]-'a'] = &dictTree{indices: []int{i}}
+				currPrefix.next[word[j]-'a'] = &trie{indices: []int{i}}
 				currPrefix = currPrefix.next[word[j]-'a']
 			} else {
 				currPrefix = currPrefix.next[word[j]-'a']
@@ -37,7 +37,7 @@ func Constructor(words []string) WordFilter {
 		currSuffix := suffix
 		for j := len(word) - 1; j >= 0; j-- {
 			if currSuffix.next[word[j]-'a'] == nil {
-				currSuffix.next[word[j]-'a'] = &dictTree{indices: []int{i}}
+				currSuffix.next[word[j]-'a'] = &trie{indices: []int{i}}
 				currSuffix = currSuffix.next[word[j]-'a']
 			} else {
 				currSuffix = currSuffix.next[word[j]-'a']

@@ -21,6 +21,7 @@ type WordFilter struct {
 func Constructor(words []string) WordFilter {
 	prefix := &dictTree{}
 	suffix := &dictTree{}
+
 	for i, word := range words {
 		currPrefix := prefix
 		for j := 0; j < len(word); j++ {
@@ -34,7 +35,7 @@ func Constructor(words []string) WordFilter {
 		}
 
 		currSuffix := suffix
-		for j := len(word)-1; j >= 0; j-- {
+		for j := len(word) - 1; j >= 0; j-- {
 			if currSuffix.next[word[j]-'a'] == nil {
 				currSuffix.next[word[j]-'a'] = &dictTree{indices: []int{i}}
 				currSuffix = currSuffix.next[word[j]-'a']
@@ -45,10 +46,7 @@ func Constructor(words []string) WordFilter {
 		}
 	}
 
-	return WordFilter{
-		prefix: prefix,
-		suffix: suffix,
-	}
+	return WordFilter{prefix, suffix}
 }
 
 func (wf *WordFilter) F(pref string, suff string) int {
@@ -65,7 +63,7 @@ func (wf *WordFilter) F(pref string, suff string) int {
 	}
 	prefixIndices = currPrefix.indices
 
-	for i := len(suff)-1; i >= 0; i-- {
+	for i := len(suff) - 1; i >= 0; i-- {
 		if currSuffix.next[suff[i]-'a'] == nil {
 			return -1
 		}
@@ -77,8 +75,8 @@ func (wf *WordFilter) F(pref string, suff string) int {
 		return -1
 	}
 
-	i := len(prefixIndices)-1
-	j := len(suffixIndices)-1
+	i := len(prefixIndices) - 1
+	j := len(suffixIndices) - 1
 	for i >= 0 && j >= 0 {
 		if prefixIndices[i] == suffixIndices[j] {
 			return prefixIndices[i]
